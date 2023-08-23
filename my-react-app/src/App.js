@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+const API = "http://localhost:5000";
+
 function App() {
 
   const [task, setTask] = useState([]); // Use this to add and remember todo values

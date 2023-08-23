@@ -2,19 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TodoSchema = new Schema({
-    text : {
+    title : {
         type: String,
         require: true
     },
     complete: {
         type: Boolean,
         default: false
-    },
-    timestamp : {
-        type: String,
-        default: Date.now()
     }
-})
+}, {timestamps: true});
 
 const Todo = mongoose.model("Todo", TodoSchema);
 
