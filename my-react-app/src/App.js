@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-const API = "http://localhost:5000";
-
 function App() {
 
   const [task, setTask] = useState([]); // Use this to add and remember todo values
   const [newTaskText, setNewTaskText] = useState(''); // Use this for when user inputs a todo value
+
+  useEffect(() => {
+    const retrieveTodos = async () => {
+      try {
+        const todos = await fetch("http://localhost:4010/api/todo");
+
+        if (!todos.ok) {
+          console.log("Can't get todos");
+        }
+
+        const response = await todos.json();
+        setTask(response);
+      } catch (error) {
+        console.log("Can't get todos", error);
+      }
+
+    }
+    retrieveTodos();
+  }, []);
 
   const handleNewTaskText = (event) => {
     setNewTaskText(event.target.value);
@@ -38,7 +55,7 @@ function App() {
         <center className='container' key={index}>
           <form>
             <input type='checkbox' className='checkmarkbox'/>
-            <span className='todo-item'>{taskItem}</span>
+            <span className='todo-item'>{taskItem.title}</span>
           </form>
           <button className='delete-item' onClick={() => handleDeleteTask(index)}>X</button>
         </center>
